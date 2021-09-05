@@ -1,0 +1,1 @@
+export { getRandomPsalm } from './psalms';
