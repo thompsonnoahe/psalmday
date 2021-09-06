@@ -8,8 +8,13 @@
 
 // Update Bulma's global variables
 $family-sans-serif: 'Playfair Display', sans-serif !important;
-$primary: rgb(0, 195, 255);
+$primary: rgb(270, 100, 2);
 $link: $primary;
+
+::selection {
+  background-color: $primary;
+  color: #fff;
+}
 
 // Import Bulma styles
 @import '../node_modules/bulma/bulma.sass';

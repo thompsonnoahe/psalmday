@@ -6,7 +6,7 @@ const Image = () => {
   const getRandomImage = async () => {
     const { data } = await unsplash.get('/random', {
       params: {
-        query: 'christian',
+        query: 'bible',
       },
     });
     setImage(data?.urls?.regular);
@@ -18,7 +18,7 @@ const Image = () => {
 
   return (
     <div
-      className='h-screen mt-28 sm:m-0'
+      className='h-screen shadow-inner mt-28 '
       style={{
         backgroundImage: `url(${image})`,
         backgroundSize: 'cover',

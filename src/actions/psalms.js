@@ -15,6 +15,9 @@ export const getRandomPsalm =
 
     dispatch({
       type: types.GET_RANDOM_PSALM,
-      payload: DOMPurify.sanitize(data),
+      payload: {
+        html: DOMPurify.sanitize(data),
+        psalmNumber: random,
+      },
     });
   };
