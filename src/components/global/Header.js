@@ -14,7 +14,7 @@ const Header = () => {
       aria-label='main navigation'>
       <div className='navbar-brand'>
         <Link className='navbar-item is-size-3' to='/'>
-          <h1>psalmday</h1>
+          <h1 className='select-none'>psalmday</h1>
         </Link>
 
         <Link

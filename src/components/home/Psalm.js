@@ -2,13 +2,37 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
-import { getRandomPsalm } from '../../actions';
+import { getRandomPsalm, setSelectedText } from '../../actions';
 import './Psalm.scss';
+import Tooltip from './Tooltip';
+import store from '../../index';
+
+// When the user's mouse is up, create the tooltip at that location
+document.addEventListener('mouseup', () => {
+  const { focusNode } = document.getSelection();
+  // If there is no node at that selection, or there's no selection, return
+  if (!focusNode || !document.getSelection().toString().length) return;
+  const el = focusNode.parentElement.insertAdjacentElement(
+    'afterend',
+    document.createElement('div')
+  );
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <Tooltip />
+    </Provider>,
+    el
+  );
+  document.getSelection().removeAllRanges();
+});
 
 const Psalm = props => {
   const [favorited, setFavorited] = useState(false);
   const ref = useRef();
+
   const getPsalm = async () => {
     ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -19,9 +43,22 @@ const Psalm = props => {
     setFavorited(!favorited);
   };
 
+  const getSelection = () => {
+    // When the selection changes, console.log() it
+    document.addEventListener('selectionchange', () => {
+      const selectedText = document.getSelection().toString();
+      if (!selectedText.length) return;
+      props.setSelectedText(selectedText);
+    });
+  };
+
   useEffect(() => {
     getPsalm();
   }, []);
+
+  useEffect(() => {
+    getSelection();
+  });
 
   return (
     <div
@@ -61,7 +98,13 @@ const Psalm = props => {
 };
 
 const mapStateToProps = state => {
-  return { html: state.randomPsalm.html, psalm: state.randomPsalm.psalmNumber };
+  return {
+    html: state.randomPsalm.html,
+    psalm: state.randomPsalm.psalmNumber,
+    selectedVerse: state.selectedVerse,
+  };
 };
 
-export default connect(mapStateToProps, { getRandomPsalm })(Psalm);
+export default connect(mapStateToProps, { getRandomPsalm, setSelectedText })(
+  Psalm
+);

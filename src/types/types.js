@@ -1,3 +1,4 @@
 export const types = {
   GET_RANDOM_PSALM: 'GET_RANDOM_PSALM',
+  SET_SELECTED_TEXT: 'SET_SELECTED_TEXT',
 };
