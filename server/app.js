@@ -24,7 +24,7 @@ app.use(
   })
 );
 
-app.use(express.static(path.resolve(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '..', 'build')));
 
 const getCredentials = async (req, res, next) => {
   try {
