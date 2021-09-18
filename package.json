@@ -32,7 +32,7 @@
     "css-build": "sass --no-source-map src/index.scss src/index.css",
     "css-watch": "npm run css-build -- --watch",
     "start": "craco start & npm run css-watch",
-    "build": "craco build && (cd server && npm install)",
+    "build": "craco build && cd server && npm install",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
