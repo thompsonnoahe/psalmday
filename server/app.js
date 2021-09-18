@@ -50,6 +50,10 @@ const getCredentials = async (req, res, next) => {
 // Get Credentials middleware
 app.use(getCredentials);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
+
 // Get a user
 app.get('/api/v1/users/:id', async (req, res) => {
   if (!req.params.id) return;
