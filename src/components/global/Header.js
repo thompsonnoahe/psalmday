@@ -14,13 +14,15 @@ const Header = () => {
       aria-label='main navigation'>
       <div className='navbar-brand'>
         <Link className='navbar-item is-size-3' to='/'>
-          <h1 className='select-none'>psalmday</h1>
+          <h1 className='select-none font-medium'>psalmday</h1>
         </Link>
 
-        <Link
-          to={''}
-          role='button'
-          className='navbar-burger'
+        <Link className='navbar-item ml-10 is-size-5' to='/psalms'>
+          <h2 className='select-none font-normal'>psalms</h2>
+        </Link>
+
+        <button
+          className={`navbar-burger ${isMobileActive ? 'is-active' : ''}`}
           aria-label='menu'
           aria-expanded='false'
           data-target='navbarBasicExample'
@@ -28,7 +30,7 @@ const Header = () => {
           <span aria-hidden='true'></span>
           <span aria-hidden='true'></span>
           <span aria-hidden='true'></span>
-        </Link>
+        </button>
       </div>
       <div className={isMobileActive ? '' : 'hidden'}>
         <MobileMenu />

@@ -1,8 +1,8 @@
 import { types } from '../types/types';
 
-export const setSelectedText = text => {
+export const setSelectedText = verse => {
   return {
     type: types.SET_SELECTED_TEXT,
-    payload: text,
+    payload: verse,
   };
 };
