@@ -55,8 +55,8 @@ const Psalm = props => {
     const { data: currentUser } = await psalmday.get(`/users/${user?.sub}`);
     ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    props.getRandomPsalm(currentUser?.user_data?.version);
-    setFontSize(currentUser?.user_data?.font_size);
+    props.getRandomPsalm(currentUser?.user_data?.version || 'NLT');
+    setFontSize(currentUser?.user_data?.font_size || 'text-base');
   };
 
   const favoritePsalm = () => {
