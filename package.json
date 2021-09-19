@@ -34,8 +34,8 @@
   "scripts": {
     "css-build": "sass --no-source-map src/index.scss src/index.css",
     "css-watch": "npm run css-build -- --watch",
-    "start": "craco start && cd server && npm start",
-    "build": "craco build && cd server && npm install",
+    "start": "craco start && (cd server && npm start)",
+    "build": "craco build && (cd server && npm install)",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
