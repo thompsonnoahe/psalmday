@@ -48,15 +48,20 @@ const Psalm = props => {
   const currentFavorites = useSelector(state => state.favoritePsalms);
   const { user, isAuthenticated } = useAuth0();
   const [favorited, setFavorited] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [fontSize, setFontSize] = useState('text-base');
   const ref = useRef();
 
-  const getPsalm = async () => {
+  const getUser = async () => {
     const { data: currentUser } = await psalmday.get(`/users/${user?.sub}`);
+    setCurrentUser(currentUser);
+    setFontSize(currentUser?.user_data?.font_size);
+  };
+
+  const getPsalm = async () => {
     ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    props.getRandomPsalm(currentUser?.user_data?.version || 'NLT');
-    setFontSize(currentUser?.user_data?.font_size || 'text-base');
+    props.getRandomPsalm(currentUser?.user_data?.version);
   };
 
   const favoritePsalm = () => {
@@ -108,9 +113,15 @@ const Psalm = props => {
   };
 
   useEffect(() => {
+    if (user) {
+      getUser();
+    }
+  }, [user]);
+
+  useEffect(() => {
     getPsalm();
     props.getFavoritePsalms(user?.sub);
-  }, [user?.sub]);
+  }, []);
 
   useEffect(() => {
     if (currentFavorites.includes(props.psalm)) {
