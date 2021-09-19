@@ -17,9 +17,15 @@ import store from '../../index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Auth0Provider } from '@auth0/auth0-react';
 import psalmday from '../../apis/psalmday';
+
+document.addEventListener('selectionchange', () => {
+  console.log(document.getSelection());
+});
+
 // When the user's mouse is up, create the tooltip at that location
 document.addEventListener('mouseup', () => {
   if (!document.getElementById('psalm')) return;
+
   const { focusNode } = document.getSelection();
   // If there is no node at that selection, or there's no selection, return
   if (!focusNode || !document.getSelection().toString().length) return;
@@ -27,7 +33,6 @@ document.addEventListener('mouseup', () => {
     'afterend',
     document.createElement('div')
   );
-
   ReactDOM.render(
     <Auth0Provider
       domain='psalmday.us.auth0.com'
@@ -36,12 +41,12 @@ document.addEventListener('mouseup', () => {
       audience='https://psalmday.us.auth0.com/api/v2/'
       scope='read:current_user update:current_user_metadata'>
       <Provider store={store}>
-        <Tooltip />
+        <Tooltip el={el} />
       </Provider>
     </Auth0Provider>,
     el
   );
-  document.getSelection().removeAllRanges();
+  document.getSelection().empty();
 });
 
 const Psalm = props => {
@@ -76,7 +81,7 @@ const Psalm = props => {
   };
 
   const getSelection = () => {
-    document.addEventListener('selectionchange', () => {
+    document.addEventListener('selectstart', () => {
       const selectedText = document.getSelection().toString();
       if (!selectedText.length) return;
       props.setSelectedText({
@@ -138,7 +143,7 @@ const Psalm = props => {
   return (
     <div
       ref={ref}
-      className={`h-screen p-10 mb-5 overflow-scroll overflow-x-hidden container sm:overflow-visible ${fontSize}`}>
+      className={`h-screen p-10 mb-5 overflow-scroll overflow-x-hidden container sm:overflow-visible ${fontSize} sm:p-1`}>
       <div
         className='p-5'
         dangerouslySetInnerHTML={{

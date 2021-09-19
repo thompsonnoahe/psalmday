@@ -1,15 +1,16 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setSavedVerses } from '../../actions/user';
+import ReactDOM from 'react-dom';
 
 const Tooltip = props => {
-  const [hidden, setHidden] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   // Whenever the user's mouse is up, hide the element
   const hideOnMouseUp = () => {
     document.addEventListener('mouseup', e => {
-      setHidden(true);
+      ReactDOM.unmountComponentAtNode(props.el);
+      document.getSelection().empty();
     });
   };
 
@@ -18,7 +19,7 @@ const Tooltip = props => {
       props.selectedVerse,
       ...props.savedVerses,
     ]);
-    document.getSelection().removeAllRanges();
+    document.getSelection().empty();
   };
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Tooltip = props => {
   });
 
   return isAuthenticated ? (
-    <div className={`card ${hidden ? 'hidden' : ''} select-none`}>
+    <div className={`card select-none`}>
       <footer className='card-footer'>
         <button className='card-footer-item' onClick={handleSaveClick}>
           Save

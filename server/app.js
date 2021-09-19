@@ -53,7 +53,7 @@ app.use(getCredentials);
 // Get a user
 app.get('/api/v1/users/:id', async (req, res) => {
   if (req.params.id === 'undefined') {
-    res.status(404).json({});
+    res.status(400).json({});
   }
   // Get user from Auth0
   const { token_type, access_token } = req.credentials;
