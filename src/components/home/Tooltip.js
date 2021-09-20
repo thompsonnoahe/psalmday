@@ -6,28 +6,18 @@ import ReactDOM from 'react-dom';
 
 const Tooltip = props => {
   const { user, isAuthenticated } = useAuth0();
-  // Whenever the user's mouse is up, hide the element
-  const hideOnMouseUp = () => {
-    document.addEventListener('mouseup', e => {
-      ReactDOM.unmountComponentAtNode(props.el);
-      document.getSelection().empty();
-    });
-  };
 
   const handleSaveClick = () => {
+    document.getSelection().removeAllRanges();
+    ReactDOM.unmountComponentAtNode(props.el);
     props.setSavedVerses(user?.sub, [
       props.selectedVerse,
       ...props.savedVerses,
     ]);
-    document.getSelection().empty();
   };
 
-  useEffect(() => {
-    hideOnMouseUp();
-  });
-
   return isAuthenticated ? (
-    <div className={`card select-none`}>
+    <div className='card select-none'>
       <footer className='card-footer'>
         <button className='card-footer-item' onClick={handleSaveClick}>
           Save
@@ -38,6 +28,7 @@ const Tooltip = props => {
 };
 
 const mapStateToProps = state => {
+  console.log(state);
   return { selectedVerse: state.selectedVerse, savedVerses: state.savedVerses };
 };
 

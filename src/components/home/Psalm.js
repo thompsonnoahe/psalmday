@@ -18,10 +18,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Auth0Provider } from '@auth0/auth0-react';
 import psalmday from '../../apis/psalmday';
 
-document.addEventListener('selectionchange', () => {
-  console.log(document.getSelection());
-});
-
 // When the user's mouse is up, create the tooltip at that location
 document.addEventListener('mouseup', () => {
   if (!document.getElementById('psalm')) return;
@@ -46,7 +42,7 @@ document.addEventListener('mouseup', () => {
     </Auth0Provider>,
     el
   );
-  document.getSelection().empty();
+  document.getSelection().removeAllRanges();
 });
 
 const Psalm = props => {
@@ -81,7 +77,7 @@ const Psalm = props => {
   };
 
   const getSelection = () => {
-    document.addEventListener('selectstart', () => {
+    document.addEventListener('selectionchange', () => {
       const selectedText = document.getSelection().toString();
       if (!selectedText.length) return;
       props.setSelectedText({
